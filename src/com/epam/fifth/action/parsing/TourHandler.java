@@ -8,6 +8,8 @@ import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.epam.fifth.action.parsing.TourEnum.*;
+
 public class TourHandler extends DefaultHandler {
     private Set<TourVoucher> tours;
     private TourVoucher current = null;
@@ -24,32 +26,28 @@ public class TourHandler extends DefaultHandler {
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
-        switch (localName) {
-            case "adventure-tour":
-                current = new AdventureTourVoucher();
-                current.setName(attrs.getValue(0));
-                ((AdventureTourVoucher) current).setGoal(attrs.getValue(1));
-                break;
-            case "concert-tour":
-                current = new ConcertTourVoucher();
-                current.setName(attrs.getValue(0));
-                ((ConcertTourVoucher) current).setGoal(attrs.getValue(1));
-                break;
-            case "medical-tour":
-                current = new MedicalTourVoucher();
-                current.setName(attrs.getValue(0));
-                ((MedicalTourVoucher) current).setGoal(attrs.getValue(1));
-                break;
-            default:
-                TourEnum temp = TourEnum.valueOf(localName.toUpperCase().replace('-', '_'));
-                if (withText.contains(temp)) {
-                    currentEnum = temp;
-                }
+        if (ADVENTURE_TOUR.getValue().equals(localName)) {
+            current = new AdventureTourVoucher();
+            current.setName(attrs.getValue(0));
+            ((AdventureTourVoucher) current).setGoal(attrs.getValue(1));
+        } else if (CONCERT_TOUR.getValue().equals(localName)) {
+            current = new ConcertTourVoucher();
+            current.setName(attrs.getValue(0));
+            ((ConcertTourVoucher) current).setGoal(attrs.getValue(1));
+        } else if (MEDICAL_TOUR.getValue().equals(localName)) {
+            current = new MedicalTourVoucher();
+            current.setName(attrs.getValue(0));
+            ((MedicalTourVoucher) current).setGoal(attrs.getValue(1));
+        } else {
+            TourEnum temp = TourEnum.valueOf(localName.toUpperCase().replace('-', '_'));
+            if (withText.contains(temp)) {
+                currentEnum = temp;
+            }
         }
     }
 
     public void endElement(String uri, String localName, String qName) {
-        if ("medical-tour".equals(localName) || "concert-tour".equals(localName) || "adventure-tour".equals(localName)) {
+        if (MEDICAL_TOUR.getValue().equals(localName) || CONCERT_TOUR.getValue().equals(localName) || ADVENTURE_TOUR.getValue().equals(localName)) {
             tours.add(current);
         }
     }

@@ -17,7 +17,9 @@ public enum TourEnum {
     PRICE("price"),
     ACTIVITY("activity"),
     MUSIC_GENRE("music-genre"),
-    TREATMENT("treatment");
+    TREATMENT("treatment"),
+    GOAL("goal"),
+    NAME("name");
 
     private String value;
 

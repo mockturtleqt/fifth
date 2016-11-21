@@ -16,6 +16,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.epam.fifth.action.parsing.TourEnum.*;
+
 public class TourDomBuilder {
     private static final Logger logger = Logger.getLogger(TourDomBuilder.class);
     private Set<TourVoucher> tours;
@@ -40,21 +42,21 @@ public class TourDomBuilder {
         try {
             doc = docBuilder.parse(fileName);
             Element root = doc.getDocumentElement();
-            NodeList adventureTourList = root.getElementsByTagName("adventure-tour");
+            NodeList adventureTourList = root.getElementsByTagName(ADVENTURE_TOUR.getValue());
             for (int i = 0; i < adventureTourList.getLength(); i++) {
                 Element tourElement = (Element) adventureTourList.item(i);
                 TourVoucher tour = buildAdventureTour(tourElement);
                 tours.add(tour);
             }
 
-            NodeList concertTourList = root.getElementsByTagName("concert-tour");
+            NodeList concertTourList = root.getElementsByTagName(CONCERT_TOUR.getValue());
             for (int i = 0; i < concertTourList.getLength(); i++) {
                 Element tourElement = (Element) concertTourList.item(i);
                 TourVoucher tour = buildConcertTour(tourElement);
                 tours.add(tour);
             }
 
-            NodeList medicalTourList = root.getElementsByTagName("medical-tour");
+            NodeList medicalTourList = root.getElementsByTagName(MEDICAL_TOUR.getValue());
             for (int i = 0; i < medicalTourList.getLength(); i++) {
                 Element tourElement = (Element) medicalTourList.item(i);
                 TourVoucher tour = buildMedicalTour(tourElement);
@@ -66,17 +68,17 @@ public class TourDomBuilder {
     }
 
     private TourVoucher fillTour(TourVoucher tour, Element tourElement) {
-        tour.setName(tourElement.getAttribute("name"));
-        tour.getCountry().addAll(getElementTextContent(tourElement, "country"));
-        tour.setDuration(Integer.parseInt(getElementTextContent(tourElement, "duration").get(0)));
-        tour.getTransportation().addAll(getElementTextContent(tourElement, "transportation"));
-        tour.setPrice(getElementTextContent(tourElement, "price").get(0));
+        tour.setName(tourElement.getAttribute(NAME.getValue()));
+        tour.getCountry().addAll(getElementTextContent(tourElement, COUNTRY.getValue()));
+        tour.setDuration(Integer.parseInt(getElementTextContent(tourElement, DURATION.getValue()).get(0)));
+        tour.getTransportation().addAll(getElementTextContent(tourElement, TRANSPORTATION.getValue()));
+        tour.setPrice(getElementTextContent(tourElement, PRICE.getValue()).get(0));
         Accommodation accommodation = new Accommodation();
-        Element accommodationElement = (Element) tourElement.getElementsByTagName("hotel").item(0);
-        accommodation.setStars(Integer.parseInt(getElementTextContent(accommodationElement, "stars").get(0)));
-        accommodation.setFood(getElementTextContent(accommodationElement, "food").get(0));
-        accommodation.setGuestsInRoom(Integer.parseInt(getElementTextContent(accommodationElement, "guests-in-room").get(0)));
-        accommodation.getAmenities().addAll(getElementTextContent(accommodationElement, "amenities"));
+        Element accommodationElement = (Element) tourElement.getElementsByTagName(HOTEL.getValue()).item(0);
+        accommodation.setStars(Integer.parseInt(getElementTextContent(accommodationElement, STARS.getValue()).get(0)));
+        accommodation.setFood(getElementTextContent(accommodationElement, FOOD.getValue()).get(0));
+        accommodation.setGuestsInRoom(Integer.parseInt(getElementTextContent(accommodationElement, GUESTS_IN_ROOM.getValue()).get(0)));
+        accommodation.getAmenities().addAll(getElementTextContent(accommodationElement, AMENITIES.getValue()));
         tour.setHotel(accommodation);
         return tour;
     }
@@ -84,24 +86,24 @@ public class TourDomBuilder {
     private TourVoucher buildAdventureTour(Element tourElement) {
         TourVoucher tour = new AdventureTourVoucher();
         fillTour(tour, tourElement);
-        ((AdventureTourVoucher) tour).getActivity().addAll(getElementTextContent(tourElement, "activity"));
-        ((AdventureTourVoucher) tour).setGoal(tourElement.getAttribute("goal"));
+        ((AdventureTourVoucher) tour).getActivity().addAll(getElementTextContent(tourElement, ACTIVITY.getValue()));
+        ((AdventureTourVoucher) tour).setGoal(tourElement.getAttribute(GOAL.getValue()));
         return tour;
     }
 
     private TourVoucher buildConcertTour(Element tourElement) {
         TourVoucher tour = new ConcertTourVoucher();
         fillTour(tour, tourElement);
-        ((ConcertTourVoucher) tour).getMusicGenre().addAll(getElementTextContent(tourElement, "music-genre"));
-        ((ConcertTourVoucher) tour).setGoal(tourElement.getAttribute("goal"));
+        ((ConcertTourVoucher) tour).getMusicGenre().addAll(getElementTextContent(tourElement, MUSIC_GENRE.getValue()));
+        ((ConcertTourVoucher) tour).setGoal(tourElement.getAttribute(GOAL.getValue()));
         return tour;
     }
 
     private TourVoucher buildMedicalTour(Element tourElement) {
         TourVoucher tour = new MedicalTourVoucher();
         fillTour(tour, tourElement);
-        ((MedicalTourVoucher) tour).getTreatment().addAll(getElementTextContent(tourElement, "treatment"));
-        ((MedicalTourVoucher) tour).setGoal(tourElement.getAttribute("goal"));
+        ((MedicalTourVoucher) tour).getTreatment().addAll(getElementTextContent(tourElement, TREATMENT.getValue()));
+        ((MedicalTourVoucher) tour).setGoal(tourElement.getAttribute(GOAL.getValue()));
         return tour;
     }
 
