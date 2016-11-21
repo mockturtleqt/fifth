@@ -5,7 +5,6 @@ public enum TourEnum {
     ADVENTURE_TOUR("adventure-tour"),
     MEDICAL_TOUR("medical-tour"),
     CONCERT_TOUR("concert-tour"),
-    //TOUR_VOUCHER("tour-voucher"), //TOUR("tour")
     HOTEL("hotel"),
     STARS("stars"),
     FOOD("food"),
