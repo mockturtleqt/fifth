@@ -40,7 +40,10 @@ public class TourStaxBuilder {
                 int type = reader.next();
                 if (type == XMLStreamConstants.START_ELEMENT) {
                     name = reader.getLocalName();
-                    name = name.toUpperCase().replace('-', '_');
+                    if (TOURIST_VOUCHERS.getValue().equals(name)) {
+                        reader.next();
+                        continue;
+                    }
                     if (ADVENTURE_TOUR.getValue().equals(name) || CONCERT_TOUR.getValue().equals(name) || MEDICAL_TOUR.getValue().equals(name)) {
                         TourVoucher tour = buildTour(reader, name);
                         tours.add(tour);
@@ -109,7 +112,6 @@ public class TourStaxBuilder {
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     name = reader.getLocalName();
-                    name = name.toUpperCase().replace('-', '_');
                     if (ADVENTURE_TOUR.getValue().equals(name) || CONCERT_TOUR.getValue().equals(name) || MEDICAL_TOUR.getValue().equals(name)) {
                         return tour;
                     }
@@ -145,7 +147,7 @@ public class TourStaxBuilder {
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     name = reader.getLocalName();
-                    if (HOTEL.equals(TourEnum.valueOf(name.toUpperCase()))) {
+                    if (HOTEL.equals(TourEnum.valueOf(name.toUpperCase().replace('-', '_')))) {
                         return accommodation;
                     }
                     break;
