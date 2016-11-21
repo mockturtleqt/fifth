@@ -1,0 +1,74 @@
+<?xml version = "1.0"?>
+
+<tourist-vouchers>
+    <adventure-tour name="Adventure1">
+
+        <hotel>
+            <stars>3</stars>
+            <food>Breakfast only</food>
+            <guests-in-room>2</guests-in-room>
+            <amenities>wi-fi</amenities>
+            <amenities>tv</amenities>
+        </hotel>
+
+        <country>Russia</country>
+        <country>Ukraine</country>
+
+        <duration>5</duration>
+
+        <transportation>bus</transportation>
+
+        <price>$100</price>
+
+        <activity>biking</activity>
+    </adventure-tour>
+
+    <concert-tour name="Muse1">
+
+        <hotel>
+            <stars>5</stars>
+            <food>None</food>
+            <guests-in-room>5</guests-in-room>
+            <amenities>wi-fi</amenities>
+            <amenities>smoking allowed</amenities>
+            <amenities>washer</amenities>
+        </hotel>
+
+        <country>Poland</country>
+        <country>Lithuania</country>
+
+        <duration>5</duration>
+
+        <transportation>train</transportation>
+
+        <price>$150.5</price>
+
+        <music-genre>rock</music-genre>
+    </concert-tour>
+
+    <medical-tour name="Medication1">
+
+        <hotel>
+            <stars>5</stars>
+            <food>Whole day</food>
+            <guests-in-room>1</guests-in-room>
+            <amenities>wi-fi</amenities>
+            <amenities>tv</amenities>
+            <amenities>washer</amenities>
+            <amenities>hair dryer</amenities>
+            <amenities>elevator in building</amenities>
+        </hotel>
+
+        <country>Sweden</country>
+        <country>Germany</country>
+
+        <duration>20</duration>
+
+        <transportation>plane</transportation>
+
+        <price>€5000</price>
+
+        <treatment>spa</treatment>
+        <treatment>massage</treatment>
+    </medical-tour>
+</tourist-vouchers>

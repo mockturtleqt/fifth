@@ -1,0 +1,152 @@
+<?xml version = "1.0"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="tourist-vouchers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tour" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tour" type="tour-voucher" abstract="true"/>
+    <xs:element name="adventure-tour" type="adventure-tour-voucher" substitutionGroup="tour"/>
+    <xs:element name="medical-tour" type="medical-tour-voucher" substitutionGroup="tour"/>
+    <xs:element name="concert-tour" type="concert-tour-voucher" substitutionGroup="tour"/>
+    <xs:complexType name="tour-voucher">
+        <xs:sequence>
+            <xs:element name="hotel" type="accommodation"/>
+            <xs:element name="country" minOccurs="1" maxOccurs="unbounded">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Russia"/>
+                        <xs:enumeration value="Ukraine"/>
+                        <xs:enumeration value="Poland"/>
+                        <xs:enumeration value="Lithuania"/>
+                        <xs:enumeration value="Latvia"/>
+                        <xs:enumeration value="France"/>
+                        <xs:enumeration value="Germany"/>
+                        <xs:enumeration value="Sweden"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="duration" type="xs:unsignedInt" minOccurs="1"/>
+            <xs:element name="transportation" minOccurs="1" maxOccurs="unbounded">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="bus"/>
+                        <xs:enumeration value="plane"/>
+                        <xs:enumeration value="train"/>
+                        <xs:enumeration value="ship"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="price" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[$£€]\d{0,8}(\.\d{1,4})?"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:ID" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="accommodation">
+        <xs:sequence>
+            <xs:element name="stars" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:unsignedInt">
+                        <xs:pattern value="[1-5]"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="food" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="None"/>
+                        <xs:enumeration value="Whole day"/>
+                        <xs:enumeration value="Breakfast only"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="guests-in-room" minOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:unsignedInt">
+                        <xs:minInclusive value="1"/>
+                        <xs:maxExclusive value="16"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="amenities" minOccurs="0" maxOccurs="unbounded">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="tv"/>
+                        <xs:enumeration value="iron"/>
+                        <xs:enumeration value="elevator in building"/>
+                        <xs:enumeration value="hair dryer"/>
+                        <xs:enumeration value="washer"/>
+                        <xs:enumeration value="wi-fi"/>
+                        <xs:enumeration value="smoking allowed"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="adventure-tour-voucher">
+        <xs:complexContent>
+            <xs:extension base="tour-voucher">
+                <xs:sequence>
+                    <xs:element name="activity" minOccurs="1" maxOccurs="unbounded">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="hiking"/>
+                                <xs:enumeration value="biking"/>
+                                <xs:enumeration value="swimming"/>
+                                <xs:enumeration value="snow-boarding"/>
+                                <xs:enumeration value="skiing"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="goal" default="adventure" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="medical-tour-voucher">
+        <xs:complexContent>
+            <xs:extension base="tour-voucher">
+                <xs:sequence>
+                    <xs:element name="treatment" minOccurs="1" maxOccurs="unbounded">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="massage"/>
+                                <xs:enumeration value="dirt-bath"/>
+                                <xs:enumeration value="stream"/>
+                                <xs:enumeration value="spa"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="goal" default="medication" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="concert-tour-voucher">
+        <xs:complexContent>
+            <xs:extension base="tour-voucher">
+                <xs:sequence>
+                    <xs:element name="music-genre" minOccurs="1" maxOccurs="unbounded">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="rock"/>
+                                <xs:enumeration value="pop"/>
+                                <xs:enumeration value="rap"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="goal" default="concert" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>
