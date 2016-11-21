@@ -65,15 +65,19 @@ public class TourStaxBuilder {
 
     private TourVoucher buildTour(XMLStreamReader reader, String tourName) throws XMLStreamException {
         TourVoucher tour = null;
-        if (ADVENTURE_TOUR.getValue().equals(tourName)) {
-            tour = new AdventureTourVoucher();
-            ((AdventureTourVoucher) tour).setGoal(reader.getAttributeValue(null, GOAL.getValue()));
-        } else if (CONCERT_TOUR.getValue().equals(tourName)) {
-            tour = new ConcertTourVoucher();
-            ((ConcertTourVoucher) tour).setGoal(reader.getAttributeValue(null, GOAL.getValue()));
-        } else if (MEDICAL_TOUR.getValue().equals(tourName)) {
-            tour = new MedicalTourVoucher();
-            ((MedicalTourVoucher) tour).setGoal(reader.getAttributeValue(null, GOAL.getValue()));
+        switch (tourName) {
+            case "adventure-tour":
+                tour = new AdventureTourVoucher();
+                ((AdventureTourVoucher) tour).setGoal(reader.getAttributeValue(null, GOAL.getValue()));
+                break;
+            case "concert-tour":
+                tour = new ConcertTourVoucher();
+                ((ConcertTourVoucher) tour).setGoal(reader.getAttributeValue(null, GOAL.getValue()));
+                break;
+            case "medical-tour":
+                tour = new MedicalTourVoucher();
+                ((MedicalTourVoucher) tour).setGoal(reader.getAttributeValue(null, GOAL.getValue()));
+                break;
         }
 
         tour.setName(reader.getAttributeValue(null, NAME.getValue()));
