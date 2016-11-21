@@ -1,11 +1,9 @@
-package com.epam.fifth.controller;
-
 import com.epam.fifth.action.parsing.TourDomBuilder;
+import org.junit.Test;
 
-public class Main {
-
-    public static void main(String[] args) {
-
+public class TourDomTest {
+    @Test
+    public void domTest() {
         TourDomBuilder domBuilder = new TourDomBuilder();
         domBuilder.buildSetTours("./data/voucher.xml");
         System.out.println(domBuilder.getTours());
