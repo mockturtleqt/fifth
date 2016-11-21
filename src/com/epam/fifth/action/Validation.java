@@ -24,8 +24,7 @@ public class Validation {
             validator.validate(new StreamSource(new File(xmlPath)));
             isValid = true;
         } catch (IOException | SAXException e) {
-            //logger.error(e);
-            System.out.println(e);
+            logger.error(e);
             isValid = false;
         }
         return isValid;
